@@ -3,68 +3,13 @@
 }
 
 <div class="text-center">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Capita Customer Care Management</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--
-        Rectangle Template
-        http://www.templatemo.com/preview/templatemo_439_rectangle
-        -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/font-awesome.css">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/templatemo-style.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-    </head>
+    
     <body>
         <!--[if lt IE 7]>
         <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-        <div class="site-bg"></div>
-        <div class="site-bg-overlay"></div>
-
-        <!-- TOP HEADER -->
-        <div class="top-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <p class="phone-info">Call us: <a href="#">010 020 0340</a></p>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <div class="social-icons">
-                            <ul>
-                                <li><a href="#" class="fa fa-facebook"></a></li>
-                                <li><a href="#" class="fa fa-twitter"></a></li>
-                                <li><a href="#" class="fa fa-linkedin"></a></li>
-                                <li><a href="#" class="fa fa-dribbble"></a></li>
-                                <li><a href="#" class="fa fa-rss"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- .top-header -->
-
-
-        <div class="visible-xs visible-sm responsive-menu">
-            <a href="#" class="toggle-menu">
-                <i class="fa fa-bars"></i> Show Menu
-            </a>
-            <div class="show-menu">
-                <ul class="main-menu">
-                    <li>
-                        <a class="show-1 active homebutton" href="#"><i class="fa fa-home"></i>Home</a>
-                    </li>
-                    <li>
-                        <a class="show-5 contactbutton" href="#"><i class="fa fa-envelope"></i>Quality Check</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        
 
         <div class="container" id="page-content">
             <div class="row">
@@ -74,12 +19,6 @@
                 <div class="col-md-9 col-sm-12 content-holder">
                     <!-- CONTENT -->
                     <div id="menu-container">
-
-                        <div class="logo-holder logo-top-margin">
-                            <a href="#" class="site-brand"><img src="images/logo.png" alt=""></a>
-                        </div>
-
-
                         <div id="menu-1" class="homepage home-section text-center">
                             <div class="welcome-text">
                                 <h2>Hello, Welcome to <strong>Capita BPO Management Service</strong></h2>
@@ -103,13 +42,28 @@
                                 <div class="col-md-12 col-sm-12">
                                     <div class="box-content">
                                         <h3 class="widget-title">Explore Speech to Text Feature</h3>
-                                        <form class="contact-form">
+                                        <form>
+                                            <div class="form-group">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle" style="display:block;" id="menu1" type="button" data-toggle="dropdown">
+                                                        Dropdown Example
+                                                        <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
+                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
+                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
+                                                        <li role="presentation" class="divider"></li>
+                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            </div>
                                             <fieldset>
                                                 <button onclick="startRecording(this);">record</button>
                                                 <button onclick="stopRecording(this);" disabled>stop</button>
-                                            </fieldset>
-                                            <fieldset>
-                                                <textarea name="message" id="message" cols="30" rows="4" placeholder="Message.."></textarea>
                                             </fieldset>
                                         </form>
                                     </div>
