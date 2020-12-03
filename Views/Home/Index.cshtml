@@ -45,26 +45,20 @@
                                         <form>
                                             <div class="form-group">
                                                 <div class="dropdown">
-                                                    <button class="btn btn-primary dropdown-toggle" style="display:block;" id="menu1" type="button" data-toggle="dropdown">
-                                                        Dropdown Example
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
-                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
-                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
-                                                        <li role="presentation" class="divider"></li>
-                                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
-                                                    </ul>
+                                                    <select class="form-control" id="sel1">
+                                                        <option value="es-CO_BroadbandModel">Colombian Spanish broadband model  (16KHz)</option>
+                                                        <option value="en-US_BroadbandModel">US English broadband model  (16KHz)</option>
+                                                        <option value="ja-JP_BroadbandModel">Japanese broadband model  (16KHz)</option>
+                                                        <option value="es-ES_BroadbandModel">Castilian Spanish broadband model  (16KHz)</option>
+                                                        <option value="pt-BR_BroadbandModel">Brazilian Portuguese broadband model  (16KHz)</option>
+                                                        <option value="es-MX_BroadbandModel">Mexican Spanish broadband model  (16KHz)</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group form-check">
                                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                             </div>
-                                            <fieldset>
-                                                <button onclick="startRecording(this);">record</button>
-                                                <button onclick="stopRecording(this);" disabled>stop</button>
-                                            </fieldset>
+                                            
                                         </form>
                                     </div>
                                 </div>
@@ -98,7 +92,7 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <p>
-                            Copyright &copy; 2084 Company Name
+                            Copyright &copy; 2020 Capita - Infinity
 
                             <!-- | Design: <a href="http://www.templatemo.com" target="_parent"><span class="green">free templates</span></a> -->
                         </p>
@@ -107,7 +101,7 @@
             </div>
         </div> <!-- .site-footer -->
 
-        <script>
+        @*<script>
             var audio_context;
             var recorder;
 
@@ -171,11 +165,7 @@
                 navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
                 });
             };
-        </script>
-
-        <script src="js/vendor/jquery-1.10.2.min.js"></script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+        </script>*@
         <!-- templatemo 439 rectangle -->
     </body>
 </div>
