@@ -21,8 +21,8 @@
     </head>
     <body>
         <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
         <div class="site-bg"></div>
         <div class="site-bg-overlay"></div>
@@ -105,20 +105,8 @@
                                         <h3 class="widget-title">Explore Speech to Text Feature</h3>
                                         <form class="contact-form">
                                             <fieldset>
-                                                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-                                                    Choose Audio from Local Machine
-                                                    <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">HTML</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">CSS</a></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">JavaScript</a></li>
-                                                    <li role="presentation" class="divider"></li>
-                                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">About Us</a></li>
-                                                </ul>
-                                            </fieldset>
-                                            <fieldset>
-                                                <input type="submit" class="button" id="button" value="Record Audio">
+                                                <button onclick="startRecording(this);">record</button>
+                                                <button onclick="stopRecording(this);" disabled>stop</button>
                                             </fieldset>
                                             <fieldset>
                                                 <textarea name="message" id="message" cols="30" rows="4" placeholder="Message.."></textarea>
@@ -164,6 +152,72 @@
                 </div>
             </div>
         </div> <!-- .site-footer -->
+
+        <script>
+            var audio_context;
+            var recorder;
+
+            function startUserMedia(stream) {
+                var input = audio_context.createMediaStreamSource(stream);
+                
+                // Uncomment if you want the audio to feedback directly
+                //input.connect(audio_context.destination);
+                //__log('Input connected to audio context destination.');
+
+                recorder = new Recorder(input);
+            }
+
+            function startRecording(button) {
+                recorder && recorder.record();
+                button.disabled = true;
+                button.nextElementSibling.disabled = false;
+            }
+
+            function stopRecording(button) {
+                recorder && recorder.stop();
+                button.disabled = true;
+                button.previousElementSibling.disabled = false;
+                
+                // create WAV download link using audio data blob
+                createDownloadLink();
+
+                recorder.clear();
+            }
+
+            function createDownloadLink() {
+                recorder && recorder.exportWAV(function (blob) {
+                    var url = URL.createObjectURL(blob);
+                    var li = document.createElement('li');
+                    var au = document.createElement('audio');
+                    var hf = document.createElement('a');
+
+                    au.controls = true;
+                    au.src = url;
+                    hf.href = url;
+                    hf.download = new Date().toISOString() + '.wav';
+                    hf.innerHTML = hf.download;
+                    li.appendChild(au);
+                    li.appendChild(hf);
+                    recordingslist.appendChild(li);
+                });
+            }
+
+            window.onload = function init() {
+                try {
+                    // webkit shim
+                    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+                    window.URL = window.URL || window.webkitURL;
+
+                    audio_context = new AudioContext;
+                } catch (e) {
+                    alert('No web audio support in this browser!');
+                }
+
+                navigator.getUserMedia({ audio: true }, startUserMedia, function (e) {
+                });
+            };
+        </script>
 
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/plugins.js"></script>
