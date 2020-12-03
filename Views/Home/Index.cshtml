@@ -42,21 +42,31 @@
                                 <div class="col-md-12 col-sm-12">
                                     <div class="box-content">
                                         <h3 class="widget-title">Explore Speech to Text Feature</h3>
-                                        <form>
+                                        <form action="Home/Submit" method="post">
                                             <div class="form-group">
                                                 <div class="dropdown">
-                                                    <select class="form-control" id="sel1">
-                                                        <option value="es-CO_BroadbandModel">Colombian Spanish broadband model  (16KHz)</option>
+                                                    <select name="audioFile" class="form-control" id="sel1">
+                                                        @foreach (var file in ViewBag.files)
+                                                        {
+                                                        <option value="@file">@file</option>
+                                                        }
+                                                        @*<option value="es-CO_BroadbandModel">Colombian Spanish broadband model  (16KHz)</option>
                                                         <option value="en-US_BroadbandModel">US English broadband model  (16KHz)</option>
                                                         <option value="ja-JP_BroadbandModel">Japanese broadband model  (16KHz)</option>
                                                         <option value="es-ES_BroadbandModel">Castilian Spanish broadband model  (16KHz)</option>
                                                         <option value="pt-BR_BroadbandModel">Brazilian Portuguese broadband model  (16KHz)</option>
-                                                        <option value="es-MX_BroadbandModel">Mexican Spanish broadband model  (16KHz)</option>
+                                                        <option value="es-MX_BroadbandModel">Mexican Spanish broadband model  (16KHz)</option>*@
                                                     </select>
+                                                </div>
+                                                <div>
+                                                    <input id="submitBtn" type="submit" />
                                                 </div>
                                             </div>
                                             <div class="form-group form-check">
-                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                @if (ViewBag.ResultText != null)
+                                                {
+                                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">@ViewBag.ResultText</textarea>
+                                                }
                                             </div>
                                             
                                         </form>
