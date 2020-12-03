@@ -10,13 +10,20 @@
     Rectangle Template
     http://www.templatemo.com/preview/templatemo_439_rectangle
     -->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/font-awesome.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/templatemo-style.css">
+    <link rel="stylesheet" href="~/css/normalize.css">
+    <link rel="stylesheet" href="~/css/font-awesome.css">
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/templatemo-style.css">
+    <link rel="stylesheet" href="~/css/spinner.css">
+
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
+    <div id="spinner-back"></div>
+    <div id="spinner-front">
+        <img src="images/ajax-loader.gif" /><br>
+        Now loading...
+    </div>
     <div class="site-bg"></div>
     <div class="site-bg-overlay"></div>
 
@@ -69,12 +76,60 @@
             &copy; 2020 - Pocothon5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="js/vendor/jquery-1.10.2.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+    <script src="~/js/vendor/jquery-1.10.2.min.js"></script>
+    <script src="~/js/plugins.js"></script>
+    <script src="~/js/spinner.js"></script>
+    <script src="~/js/main.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+
+    <script type="text/javascript">
+        $(function () {
+            $("#btnGet").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Submit",
+                    data: { "filename": $("#sel1").val() },
+                    //contentType: "application/json",
+                    dataType: "json",
+                    beforeSend: function () {
+                        // Show image container
+                        show();
+                    },
+                    success: function (response) {
+                        var res = response.split("=");
+                        $("#exampleFormControlTextarea1").val(res[0]);
+                        var score = res[1];
+                        if (score >= 75) {
+                            $("#alertBoxSuccess").show();
+                        } else if (score >= 60 && score <= 75) {
+                            $("#alertBoxInfo").show();
+                        } else {
+                            $("#alertBoxWarning").show();
+                        }
+
+                        window.setTimeout(function () {
+                            $("#alertBoxSuccess").hide();
+                            $("#alertBoxWarning").hide();
+                            $("#alertBoxInfo").hide();
+                            }, 3000);
+
+                    },
+                    complete: function (data) {
+                        // Hide image container
+                        hide();
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pocothon5.Models;
 
@@ -15,46 +16,54 @@ namespace Pocothon5.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private IConfiguration configuration;
+        public HomeController(ILogger<HomeController> logger, IConfiguration iConfig)
         {
-           
             _logger = logger;
+            configuration = iConfig;
         }
 
         public IActionResult Index()
         {
-            string[] waveFiles = Directory.GetFiles(@"C:\Pocathon6\AppData", "*.wav")
+            var url = configuration.GetSection("AudioFileUrl").Value;
+            string[] waveFiles = Directory.GetFiles(url, "*.wav")
                                            .Select(Path.GetFileName)
                                            .ToArray();
+            
             ViewBag.files = waveFiles;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Submit()
+        public JsonResult Submit(string filename)
         {
-           
-            var file = @"C:\Pocathon6\AppData\"+Request.Form["audioFile"];
-            var speechConfig = SpeechConfig.FromSubscription("d6d5967d6f9c402faddbccf68a2a3dc4", "Eastus");
+            var url = configuration.GetSection("AudioFileUrl").Value;
+            var SubscriptionKey = configuration.GetSection("SubscriptionKey").Value;
+            var SubscriptionRegion = configuration.GetSection("SubscriptionRegion").Value;
+            var file = url+ filename;
+            var speechConfig = SpeechConfig.FromSubscription(SubscriptionKey, SubscriptionRegion);
             var resulttext = FromFile(speechConfig, file).GetAwaiter().GetResult();
-            string[] waveFiles = Directory.GetFiles(@"C:\Pocathon6\AppData", "*.wav")
+            string[] waveFiles = Directory.GetFiles(url, "*.wav")
                                            .Select(Path.GetFileName)
                                            .ToArray();
-            ViewBag.files = waveFiles;
-            ViewBag.ResultText = resulttext;
-            return View("Index");
+            //Match with template
+
+            int score = 0;
+            FizzyMatch fizzy = new FizzyMatch();
+            var templateString = "My voice is my passport verify me";
+            var matchedIndices = fizzy.FuzzyMatch(resulttext, templateString, out score);
+            resulttext = resulttext + "=" + score;
+            
+
+            return Json(resulttext);
         }
 
         async static Task<string> FromFile(SpeechConfig speechConfig, string file)
         {
-            //var file = @"C:\PocathonDec20\cognitive-services-speech-sdk-master\cognitive-services-speech-sdk-master\sampledata\audiofiles\myVoiceIsMyPassportVerifyMe01.wav";
-            //var file = @"C:\PocathonDec20\samples\CallCenter1.wav";
             using var audioConfig = AudioConfig.FromWavFileInput(file);
             using var recognizer = new SpeechRecognizer(speechConfig, audioConfig);
 
             var result = await recognizer.RecognizeOnceAsync();
-            Console.WriteLine($"RECOGNIZED: Text={result.Text}");
             return result.Text;
         }
 
